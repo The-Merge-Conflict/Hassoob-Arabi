@@ -18,7 +18,7 @@ import sys
 os.environ.setdefault("HASSOOB_IDE", "1")
 try:
     import matplotlib as _matplotlib
-    _matplotlib.use("TkAgg", force=True)
+    _matplotlib.use("TkAgg", force=True)    
 except Exception:
     pass
 
