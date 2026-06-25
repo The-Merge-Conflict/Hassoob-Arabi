@@ -67,8 +67,33 @@ HassoobArabi/
 python -m venv venv
 run the activation script for the venv under venv/Scripts/activate
 pip install -r requirements.txt
+```
 
-# توليد المحلل من القواعد (يتطلب Java + أداة antlr4)
+### توليد المحلل من القواعد / Generate the parser
+
+أداة ANTLR4 مكتوبة بلغة Java، لذا تحتاج أولًا إلى:
+
+1. **تثبيت Java** (إصدار 11 أو أحدث): <https://www.oracle.com/java/technologies/downloads/> أو
+   أي توزيعة OpenJDK مثل <https://adoptium.net/>.
+2. **تنزيل أداة ANTLR4 من الموقع الرسمي**: <https://www.antlr.org/download.html>
+   — نزّل ملف `antlr-4.13.1-complete.jar` (يطابق إصدار `antlr4-python3-runtime`
+   في `requirements.txt`) واحفظه في مكان معروف.
+3. **اضبط الأمر `antlr4` كاختصار** لتشغيل ذلك الملف:
+
+```bash
+# Linux / macOS — أضف السطرين إلى ~/.bashrc أو ~/.zshrc
+export CLASSPATH=".:/path/to/antlr-4.13.1-complete.jar:$CLASSPATH"
+alias antlr4='java -jar /path/to/antlr-4.13.1-complete.jar'
+```
+
+```powershell
+# Windows PowerShell — أو ببساطة استدعِ الملف مباشرةً عبر java -jar
+java -jar C:\path\to\antlr-4.13.1-complete.jar -Dlanguage=Python3 -visitor -o generated HassoobArabi.g4
+```
+
+ثم ولّد المحلّل اللفظي/النحوي (يُنشئ مجلّد `generated` تلقائيًا إن لم يكن موجودًا):
+
+```bash
 antlr4 -Dlanguage=Python3 -visitor -o generated HassoobArabi.g4
 ```
 
@@ -117,8 +142,3 @@ python tests/test_ide.py
 ```
 
 الاختبارات تبني شجرة البناء مباشرةً (دون الحاجة للمحلل المولّد) لذا تعمل حتى قبل توليد ANTLR.
-
-## ملاحظة حول القواعد / Grammar note
-
-تمت مراجعة `HassoobArabi.g4` بالكامل مقابل `ast_builder.py` والمُفسّر؛ لم تكن هناك
-حاجة لأي تغيير وظيفي (انظر التعليق في أعلى الملف).
