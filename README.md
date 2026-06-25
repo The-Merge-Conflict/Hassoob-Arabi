@@ -10,32 +10,62 @@ symbolic + numeric computation, plotting, and fully Arabic syntax.
 
 ```
 HassoobArabi/
-├─ HassoobArabi.g4        قواعد ANTLR4 (grammar)
-├─ generated/             مخرجات ANTLR4 (تُولّد — انظر أدناه)
-├─ ide/                   بيئة التطوير الرسومية (RTL)
-│  ├─ engine.py           محرّك التنفيذ/REPL (بلا اعتماد على واجهة)
-│  ├─ highlight.py        مُلوّن البنية (بلا اعتماد على واجهة)
-│  └─ editor.py           واجهة Tkinter اليمينية
-├─ src/                   الشيفرة المصدرية
-│  ├─ ast_nodes.py        عقد الشجرة (مُعطى)
-│  ├─ ast_builder.py      باني الشجرة (مُعطى)
-│  ├─ errors.py           الأخطاء وإشارات التحكم
+├─ HassoobArabi.g4         قواعد ANTLR4 (تعريف اللغة)
+├─ generated/             المحلل اللفظي/النحوي المولَّد من ANTLR4 (ناتج بناء)
+├─ main.py                نقطة الدخول (تشغيل ملف / REPL / -c / --ide)
+├─ requirements.txt       اعتماديات بايثون
+├─ src/
+│  ├─ ast_nodes/          أصناف عقد الـ AST (حزمة)
+│  │  ├─ __init__.py        يعيد تصدير كل عقدة (يحافظ على `from ast_nodes import *`)
+│  │  ├─ base.py            المزيج _Positioned لموقع المصدر
+│  │  ├─ statements.py      عقد الجُمل / التحكم بالتدفق
+│  │  ├─ expressions.py     عقد التعابير (العوامل، الاستدعاءات، الفهرسة، اللامبدا)
+│  │  └─ literals.py        عقد القيم الحرفية / الثوابت (الأرقام، النصوص، القوائم، π/e/∞)
+│  ├─ ast_builder.py      شجرة الإعراب ← AST
+│  ├─ semantic.py         التحليل الدلالي الساكن
+│  ├─ optimizer.py        مُحسِّن الـ AST
+│  ├─ interpreter/        المفسّر الجائب للشجرة (حزمة)
+│  │  ├─ __init__.py        يعيد تصدير Interpreter وFunction وparse_program وparse_expression وrun_source
+│  │  ├─ evaluator.py       قيمة Function + صنف Interpreter
+│  │  ├─ parsing.py         واجهة ANTLR الأمامية + أخطاء نحوية عربية لطيفة
+│  │  └─ pipeline.py        run_source: التحليل ← التحسين ← التحليل الدلالي ← التفسير
 │  ├─ environment.py      سلسلة النطاقات
-│  ├─ optimizer.py        المُحسّن
-│  ├─ semantic.py         المحلل الدلالي
-│  ├─ interpreter.py      المُفسّر
-│  ├─ builtins.py         الدوال المدمجة
-│  ├─ _builtins_loader.py مُحمّل يتجنّب تعارض الاسم مع builtins القياسية
+│  ├─ library/            المكتبة القياسية (حزمة، تحل محل builtins.py)
+│  │  ├─ __init__.py        يجمّع سجلّ BUILTINS من جميع المجالات
+│  │  ├─ _shared.py         مساعدات مشتركة (تحويل الأعداد، الكائنات القابلة للاستدعاء، …)
+│  │  ├─ formatting.py      تنسيق المخرجات / القيم (format_value، to_arabic_digits)
+│  │  ├─ symbolic.py        الرياضيات الرمزية (الاشتقاق، التكامل، الحل، …)
+│  │  ├─ numeric.py         العمليات العددية والجبر الخطي
+│  │  ├─ statistics.py      الإحصاء
+│  │  ├─ text_lists.py      دوال القوائم والنصوص
+│  │  └─ plotting.py        الرسم البياني (Matplotlib آمن بلا واجهة)
+│  ├─ _builtins_loader.py يحمّل BUILTINS من library/ (يتجنّب التعارض مع builtins القياسية)
+│  ├─ runtime_ops.py      مساعدات زمن التشغيل للعوامل / الفهرسة
+│  ├─ lang_utils.py       أدوات مشتركة
+│  ├─ errors/             التسلسل الهرمي للأخطاء العربية + إشارات التحكم (حزمة)
+│  │  ├─ __init__.py        يعيد تصدير كامل الواجهة العامة
+│  │  ├─ base.py            to_arabic_digits، closest_name، HassoobError
+│  │  ├─ syntax.py          LexError، ParseError
+│  │  ├─ semantic.py        SemanticError، MultiError
+│  │  ├─ runtime.py         HassoobRuntimeError
+│  │  └─ signals.py         ReturnSignal، BreakSignal، ContinueSignal
 │  └─ repl.py             الصدفة التفاعلية
-├─ tests/                 اختبارات pytest
-├─ examples/              برامج أمثلة (.حع)
-├─ main.py                نقطة الدخول
-└─ requirements.txt
+├─ ide/
+│  ├─ engine.py           محرك تشغيل/REPL مستقل عن الواجهة
+│  ├─ highlight.py        مُلوِّن بنيوي مستقل عن الواجهة
+│  ├─ editor_qt.py        محرر PySide6 (Qt) يميني الاتجاه — الأساسي
+│  ├─ editor.py           محرر Tkinter يميني الاتجاه — بديل بلا تثبيت
+│  ├─ __init__.py         يختار Qt تلقائيًا، ويرجع إلى Tkinter عند الحاجة
+│  └─ __main__.py         مُشغِّل `python -m ide`
+├─ tests/                 مجموعات اختبارات pytest (تبني أشجار AST مباشرة)
+└─ examples/              برامج أمثلة (.حع)
 ```
 
 ## التثبيت / Setup
 
 ```bash
+python -m venv venv
+run the activation script for the venv under venv/Scripts/activate
 pip install -r requirements.txt
 
 # توليد المحلل من القواعد (يتطلب Java + أداة antlr4)
