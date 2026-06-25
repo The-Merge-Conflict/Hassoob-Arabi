@@ -334,6 +334,12 @@ Escapes: `\n \t \\ \" \' \uXXXX`. f-strings start with `f`, `F`, or `ف`.
 | `ضرب_متجهي(ش١, ش٢)` | Cross product. |
 | `حل_خطي(أ, ب)` | Solve the linear system A·x = b. |
 
+### Trigonometry
+| Command | Description |
+|---|---|
+| `جا(زاوية)` / `جيب(زاوية)` | Sine; angle in radians. Works numerically and symbolically. |
+| `جتا(زاوية)` / `جيب_تمام(زاوية)` | Cosine; angle in radians. Works numerically and symbolically. |
+
 ### Statistics
 | Command | Description |
 |---|---|

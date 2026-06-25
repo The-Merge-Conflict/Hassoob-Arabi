@@ -45,6 +45,34 @@ def test_range_and_minmax():
     assert _b("أكبر")(data) == 9
 
 
+def test_sine_cosine_numeric():
+    sin = _b("جا")
+    cos = _b("جتا")
+    assert abs(sin(0) - 0.0) < 1e-9
+    assert abs(cos(0) - 1.0) < 1e-9
+    assert abs(sin(math.pi / 2) - 1.0) < 1e-9
+    assert abs(cos(math.pi) - (-1.0)) < 1e-9
+    # the trig identity holds for an arbitrary angle
+    assert abs(sin(0.7) ** 2 + cos(0.7) ** 2 - 1.0) < 1e-9
+
+
+def test_sine_cosine_aliases():
+    # جيب is an alias of جا and جيب_تمام is an alias of جتا
+    assert _b("جيب") is _b("جا")
+    assert _b("جيب_تمام") is _b("جتا")
+
+
+def test_sine_bad_argument_raises_friendly_error():
+    from errors import HassoobRuntimeError
+    for fn_name, bad in (("جا", "ليس عددًا"), ("جتا", [1, 2, 3])):
+        try:
+            _b(fn_name)(bad)
+        except HassoobRuntimeError:
+            pass
+        else:
+            raise AssertionError(f"{fn_name} should reject {bad!r} with a HassoobRuntimeError")
+
+
 def test_determinant():
     # det([[1,2],[3,4]]) == -2
     assert abs(_b("محدد")([[1, 2], [3, 4]]) - (-2.0)) < 1e-9

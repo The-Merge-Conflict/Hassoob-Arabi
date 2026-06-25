@@ -21,12 +21,13 @@ from .formatting import format_value  # noqa: E402
 from .formatting import REGISTRY as _output  # noqa: E402
 from .symbolic import REGISTRY as _symbolic  # noqa: E402
 from .numeric import REGISTRY as _numeric  # noqa: E402
+from .trigonometry import REGISTRY as _trigonometry  # noqa: E402
 from .statistics import REGISTRY as _statistics  # noqa: E402
 from .plotting import REGISTRY as _plotting  # noqa: E402
 from .text_lists import REGISTRY as _text_lists  # noqa: E402
 
 BUILTINS: dict[str, callable] = {}
-for _registry in (_output, _symbolic, _numeric, _statistics, _plotting, _text_lists):
+for _registry in (_output, _symbolic, _numeric, _trigonometry, _statistics, _plotting, _text_lists):
     BUILTINS.update(_registry)
 
 # Help text: list of builtin names grouped, used by the REPL's مساعدة command.
