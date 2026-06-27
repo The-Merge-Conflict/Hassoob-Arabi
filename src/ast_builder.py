@@ -15,7 +15,7 @@ from ast_nodes import *
 class ASTBuilder(HassoobArabiVisitor):
 
     # ── Position tracking ────────────────────────────
-    # CHANGED: stamp every AST node with its source line/column so semantic
+    # stamp every AST node with its source line/column so semantic
     # and runtime errors can point at the exact spot. visit() runs for every
     # rule context; we copy ctx.start.line / ctx.start.column onto the node it
     # produced (plain attrs -> see ast_nodes._Positioned, equality unaffected).
@@ -41,7 +41,7 @@ class ASTBuilder(HassoobArabiVisitor):
 
     @staticmethod
     def _process_string(raw: str) -> str:
-        # CHANGED (#6): delegate to lang_utils.decode_escapes, which handles the
+        # delegate to lang_utils.decode_escapes, which handles the
         # full ESCAPE_SEQ set (\uXXXX, \b, \f, \0, ...) in one safe pass
         # instead of a fragile ordered .replace() chain.
         q_idx = raw.index('"') if '"' in raw else raw.index("'")
@@ -59,7 +59,7 @@ class ASTBuilder(HassoobArabiVisitor):
         return [ctx.getChild(i) for i in range(1, ctx.getChildCount(), 2)]
 
     def _index_group(self, index_list_ctx):
-        # CHANGED (#8): a single bracket group -> scalar index node; a comma
+        # single bracket group -> scalar index node; a comma
         # group a[i, j] -> TupleNode for N-D access.
         exprs = index_list_ctx.expression()
         if len(exprs) == 1:
@@ -112,7 +112,7 @@ class ASTBuilder(HassoobArabiVisitor):
         return AugAssignNode(name=ctx.IDENTIFIER().getText(), op=ctx.augOp().getText(), value=self.visit(ctx.expression()))
 
     def visitIndexAssignStmt(self, ctx):
-        # CHANGED (#8/#9): collect every bracket group so a[i][j] and a[i, j]
+        # collect every bracket group so a[i][j] and a[i, j]
         # both work at any depth; the trailing expression is the RHS value.
         groups = [self._index_group(il) for il in ctx.indexList()]
         return IndexAssignNode(
@@ -248,7 +248,7 @@ class ASTBuilder(HassoobArabiVisitor):
         return StringLiteralNode(value=self._process_string(ctx.STRING_LIT().getText()))
 
     def visitFStringLiteral(self, ctx):
-        # CHANGED (#7): split template into literal/expr parts at build time and
+        # split template into literal/expr parts at build time and
         # parse each interpolation into a real AST node, so semantic analysis
         # sees the names and runtime no longer re-parses with a regex.
         inner = self._process_string(ctx.FSTRING_LIT().getText())

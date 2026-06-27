@@ -26,7 +26,7 @@ class StringLiteralNode(_Positioned):
 @dataclass
 class FStringNode(_Positioned):
     raw: str                                 # inner text with {expr} placeholders intact
-    parts: List[Any] = field(default_factory=list)  # CHANGED: [("lit", str) | ("expr", node)] built at parse time
+    parts: List[Any] = field(default_factory=list)  # [("lit", str) | ("expr", node)] built at parse time
 
 
 @dataclass

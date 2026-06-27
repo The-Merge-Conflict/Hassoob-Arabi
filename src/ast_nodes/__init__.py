@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
 # src/ast_nodes/ package
 # Re-exports every AST node so `from ast_nodes import ...` (and the star
-# import used by ast_builder) keeps working unchanged after the split.
+# import used by ast_builder).
 # ---------------------------------------------------------------------------
 from __future__ import annotations
 from dataclasses import dataclass, field

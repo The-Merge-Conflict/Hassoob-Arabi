@@ -1,4 +1,4 @@
-// Generated from d:/development/python/Hassoob-Arabi/HassoobArabi.g4 by ANTLR 4.13.1
+// Generated from c:/HIAST/4thyear/S2/Compiler/HassobArabiNew/HassoobArabi.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -56,7 +56,7 @@ public class HassoobArabiLexer extends Lexer {
 			null, "'\\u0625\\u0630\\u0627'", "'\\u0648\\u0625\\u0644\\u0627'", "'\\u0628\\u064A\\u0646\\u0645\\u0627'", 
 			"'\\u0644\\u0643\\u0644'", "'\\u0645\\u0646'", "'\\u0625\\u0644\\u0649'", 
 			"'\\u0641\\u064A'", "'\\u0628\\u062E\\u0637\\u0648\\u0629'", "'\\u062F\\u0627\\u0644\\u0629'", 
-			"'\\u0625\\u0631\\u062C\\u0639'", "'\\u0627\\u0648\\u0642\\u0641'", "'\\u0627\\u0633\\u062A\\u0645\\u0631'", 
+			"'\\u0625\\u0631\\u062C\\u0639'", "'\\u062A\\u0648\\u0642\\u0641'", "'\\u0627\\u0633\\u062A\\u0645\\u0631'", 
 			"'\\u0635\\u062D'", "'\\u062E\\u0637\\u0623'", "'\\u0641\\u0627\\u0631\\u063A'", 
 			"'\\u0631\\u0645\\u0632'", null, "'\\u0647\\u0640'", "'\\u0644\\u0627\\u0646\\u0647\\u0627\\u064A\\u0629'", 
 			null, null, null, "'+='", "'-='", "'*='", "'/='", "'^='", "'%='", "'++='", 
@@ -300,7 +300,7 @@ public class HassoobArabiLexer extends Lexer {
 		"\u0629\u0000\u0000\u00bc\u0012\u0001\u0000\u0000\u0000\u00bd\u00be\u0005"+
 		"\u0625\u0000\u0000\u00be\u00bf\u0005\u0631\u0000\u0000\u00bf\u00c0\u0005"+
 		"\u062c\u0000\u0000\u00c0\u00c1\u0005\u0639\u0000\u0000\u00c1\u0014\u0001"+
-		"\u0000\u0000\u0000\u00c2\u00c3\u0005\u0627\u0000\u0000\u00c3\u00c4\u0005"+
+		"\u0000\u0000\u0000\u00c2\u00c3\u0005\u062a\u0000\u0000\u00c3\u00c4\u0005"+
 		"\u0648\u0000\u0000\u00c4\u00c5\u0005\u0642\u0000\u0000\u00c5\u00c6\u0005"+
 		"\u0641\u0000\u0000\u00c6\u0016\u0001\u0000\u0000\u0000\u00c7\u00c8\u0005"+
 		"\u0627\u0000\u0000\u00c8\u00c9\u0005\u0633\u0000\u0000\u00c9\u00ca\u0005"+

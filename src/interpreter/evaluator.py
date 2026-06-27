@@ -145,7 +145,7 @@ class Interpreter:
         return None
 
     def _x_AssignNode(self, node, env):
-        # CHANGED (#5): Mathematica-like scope. Mutate an existing binding up the
+        # Mathematica-like scope. Mutate an existing binding up the
         # chain (so plain = updates an outer/global variable), otherwise define a
         # new binding in the current frame.
         value = self.evaluate(node.value, env)
@@ -165,7 +165,7 @@ class Interpreter:
         return None
 
     def _x_IndexAssignNode(self, node, env):
-        # CHANGED (#8/#9): support a[i][j] and a[i, j] at any rank by descending
+        # support a[i][j] and a[i, j] at any rank by descending
         # through every bracket group, then assigning into the final container.
         target = env.get(node.target)
         groups = [self.evaluate(g, env) for g in node.indices]
@@ -269,7 +269,7 @@ class Interpreter:
     # ══ expressions ═════════════════════════════════════════
     @staticmethod
     def _stamp(err, node):
-        # CHANGED: attach the current node's source position to a language
+        #  attach the current node's source position to a language
         # error that has none yet. The innermost evaluate/execute frame wins
         # (its node is the most specific), so outer frames leave it intact.
         if getattr(err, "line", None) is None:
@@ -307,7 +307,7 @@ class Interpreter:
         return _sp.oo if _HAS_SYMPY else math.inf
 
     def _e_FStringNode(self, node, env):
-        # CHANGED (#7): evaluate the pre-parsed parts instead of re-parsing the
+        # evaluate the pre-parsed parts instead of re-parsing the
         # raw template with a regex at runtime.
         if not node.parts:
             return node.raw
@@ -462,7 +462,7 @@ class Interpreter:
             if op == "^":
                 if symbolic:
                     return _sp.Pow(left, right)
-                check_power(left, right)   # CHANGED (#4): reject neg base ^ non-integer power
+                check_power(left, right)   # reject neg base ^ non-integer power
                 return left ** right
             if op == "**":
                 return np.matmul(np.asarray(left), np.asarray(right))
@@ -486,7 +486,7 @@ class Interpreter:
         except HassoobRuntimeError:
             raise
         except ValueError as exc:
-            # CHANGED (#1/#2): numpy raises ValueError on shape/dimension mismatch;
+            # numpy raises ValueError on shape/dimension mismatch;
             # translate it into a friendly Arabic message (always raises).
             raise_binop_value_error(op, left, right, exc)
         except TypeError:
@@ -531,7 +531,7 @@ class Interpreter:
         return bool(value)
 
     def _index_key(self, target, index):
-        # CHANGED: delegate to the shared, unit-tested helper.
+        # delegate to the shared, unit-tested helper.
         return rt_index_key(target, index)
 
     @staticmethod
@@ -544,8 +544,7 @@ class Interpreter:
         return elements
 
     # ── f-string interpolation ──────────────────────────────────────
-    # CHANGED (#7): f-strings are parsed into parts at build time (see
-    # ast_builder.visitFStringLiteral) and evaluated in _e_FStringNode, so the
-    # old runtime regex re-parser (_FSTRING_RE / _eval_fstring) was removed.
+    # f-strings are parsed into parts at build time (see
+    # ast_builder.visitFStringLiteral) and evaluated in _e_FStringNode.
 
 

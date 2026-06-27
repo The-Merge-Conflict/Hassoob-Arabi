@@ -28,15 +28,15 @@ except Exception:
 
 # PySide6 أولًا: إن غابت، ارفع ImportError كي يتراجع المُشغِّل إلى Tkinter.
 try:
-    from PySide6.QtCore import Qt, QRect, QSize
+    from PySide6.QtCore import Qt, QRect, QSize, QTimer
     from PySide6.QtGui import (
         QAction, QColor, QFont, QKeySequence, QPainter,
         QSyntaxHighlighter, QTextCharFormat, QTextCursor, QTextOption, QPalette,
     )
     from PySide6.QtWidgets import (
         QApplication, QFileDialog, QHBoxLayout, QLabel, QLineEdit,
-        QMainWindow, QMessageBox, QPlainTextEdit, QSplitter, QToolBar,
-        QVBoxLayout, QWidget,
+        QMainWindow, QMessageBox, QPlainTextEdit, QSplitter, QTextEdit,
+        QToolBar, QVBoxLayout, QWidget,
     )
 except Exception as exc:  # PySide6 غير مُثبّتة
     raise ImportError("PySide6 is required for the Qt RTL IDE") from exc
@@ -224,6 +224,7 @@ class HassoobQtIDE(QMainWindow):
         self.editor.setPlainText(SAMPLE)
         self._println(" أهلًا بك في بيئة حاسوب عربي. اكتب برنامجك ثم اضغط «تشغيل» (F5).", "info")
         self._update_status()
+        self._run_diagnostics()
 
     # ── الأدوات ─────────────────────────────────────────────────────
     def _act(self, text, slot, shortcut=None):
@@ -258,6 +259,18 @@ class HassoobQtIDE(QMainWindow):
         self.editor.textChanged.connect(self._update_status)
         self.editor.cursorPositionChanged.connect(self._update_status)
         self.highlighter = QtHighlighter(self.editor.document(), self.engine.builtin_names)
+
+        # ── التشخيص الحيّ: تسطير كل ظهور لاسمٍ غير معرّف ───────────────────
+        # السبب: المُحلِّل الدلالي يُبلّغ عن الاسم غير المعرّف مرّةً واحدةً لكل نطاق
+        # (الخيار ١، كي لا نُغرق المستخدم بآلاف الأخطاء لجذرٍ واحد). لكنّنا لا نريد
+        # أن يخسر بقيّة المواضع، فنرسم تحت *كل* ظهورٍ تسطيرًا مموّجًا أحمر عبر
+        # setExtraSelections — والقائمة (شريط الحالة) تبقى رسالةً واحدةً + (+ن).
+        # نُعيد الحساب بعد توقّف الكتابة بقليل (debounce) كي لا نُثقل المحرّر.
+        self._diag_timer = QTimer(self)
+        self._diag_timer.setSingleShot(True)
+        self._diag_timer.setInterval(250)
+        self._diag_timer.timeout.connect(self._run_diagnostics)
+        self.editor.textChanged.connect(self._schedule_diagnostics)
         split.addWidget(self.editor)
 
         bottom = QWidget()
@@ -293,6 +306,9 @@ class HassoobQtIDE(QMainWindow):
 
     def _build_statusbar(self):
         self.status = self.statusBar()
+        # رسالة التشخيص (يسار): أوّل خطأ + عدد البقيّة (+ن) دون إغراق المستخدم.
+        self._diag_label = QLabel("")
+        self.status.addWidget(self._diag_label)
         self._status_label = QLabel("")
         self.status.addPermanentWidget(self._status_label)
 
@@ -347,6 +363,53 @@ class HassoobQtIDE(QMainWindow):
         res = self.engine.run_source(src, fresh=True)
         self._show_result(res)
         self._update_status()
+        self._run_diagnostics()
+
+    # ── التشخيص الحيّ (تسطير كل ظهور لاسمٍ غير معرّف) ────────────────
+    def _schedule_diagnostics(self):
+        """أعِد جدولة حساب التشخيص بعد توقّف الكتابة (debounce)."""
+        self._diag_timer.start()
+
+    def _run_diagnostics(self):
+        """حلّل المصدر دون تشغيله وارسم تسطيرًا أحمر تحت *كل* ظهور لاسمٍ غير
+        معرّف. يُبلَّغ عن الاسم مرّةً واحدةً لكل نطاق في شريط الحالة (الخيار ١)،
+        أمّا التسطير فيشمل جميع المواضع كي يجدها المستخدم بسهولة في ملفٍ طويل.
+        تُحسب الإزاحات على نصّ المحرّر نفسه فتنطبق تمامًا على مواضع المستند."""
+        source = self.editor.toPlainText()
+        try:
+            report = self.engine.diagnose(source)
+        except Exception:
+            report = None
+
+        selections = []
+        if report is not None and getattr(report, "underlines", None):
+            fmt = QTextCharFormat()
+            fmt.setUnderlineStyle(QTextCharFormat.WaveUnderline)
+            fmt.setUnderlineColor(QColor("#ff6b6b"))
+            fmt.setForeground(QColor("#ff6b6b"))
+            doc = self.editor.document()
+            n = len(source)
+            for u in report.underlines:
+                start, end = max(0, u.start), min(n, u.end)
+                if end <= start:
+                    continue
+                cur = QTextCursor(doc)
+                cur.setPosition(start)
+                cur.setPosition(end, QTextCursor.KeepAnchor)
+                sel = QTextEdit.ExtraSelection()
+                sel.cursor = cur
+                sel.format = fmt
+                selections.append(sel)
+        self.editor.setExtraSelections(selections)
+
+        diags = report.diagnostics if report is not None else []
+        if diags:
+            extra = f"  (+{len(diags) - 1})" if len(diags) > 1 else ""
+            self._diag_label.setText(f"\u26a0 {diags[0].message}{extra}")
+            self._diag_label.setStyleSheet("color:#ff6b6b;")
+        else:
+            self._diag_label.setText("")
+            self._diag_label.setStyleSheet(f"color:{MUTED};")
 
     def _on_repl_enter(self):
         line = self.repl.text().strip()

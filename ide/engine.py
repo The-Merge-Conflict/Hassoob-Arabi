@@ -25,9 +25,7 @@ for _p in (os.path.join(_ROOT, "generated"), os.path.join(_ROOT, "src")):
         sys.path.insert(0, _p)
 
 from errors import HassoobError  # noqa: E402
-from interpreter import Interpreter, parse_program  # noqa: E402
-from optimizer import optimize  # noqa: E402
-from semantic import analyse  # noqa: E402
+from interpreter import Interpreter, compile_program  # noqa: E402
 from _builtins_loader import BUILTINS, BUILTIN_NAMES, format_value, to_arabic_digits  # noqa: E402
 
 
@@ -74,14 +72,46 @@ class HassoobEngine:
         """Evaluate a single REPL line against the persistent session."""
         return self._execute(source, capture_value=True)
 
+    # ── diagnostics (headless; powers IDE squiggles + underlines) ──
+    def diagnose(self, source: str):
+        """Analyse *source* WITHOUT running it and return structured diagnostics.
+
+        Each problem is listed ONCE (the analyser de-duplicates an undefined
+        name per scope). In addition, EVERY textual occurrence of each
+        undefined name is returned as an underline span, so a front-end can
+        highlight all of its uses while the list still shows it once. Never
+        raises: on a parser/analyser failure it returns whatever it could
+        collect (possibly an empty report).
+        """
+        try:
+            from .diagnostics import build, Diagnostics
+        except ImportError:  # imported without package context
+            import sys as _sys
+            if _HERE not in _sys.path:
+                _sys.path.insert(0, _HERE)
+            from diagnostics import build, Diagnostics  # type: ignore
+        try:
+            from interpreter.parsing import parse_program_collecting
+            from semantic import collect_semantic_errors
+        except Exception:
+            return Diagnostics()
+        try:
+            program, syntax_errors = parse_program_collecting(source)
+        except Exception:
+            return Diagnostics()
+        try:
+            semantic_errors = collect_semantic_errors(
+                program, builtin_names=self.builtin_names)
+        except Exception:
+            semantic_errors = []
+        return build(source, syntax_errors, semantic_errors)
+
     # ── internals ───────────────────────────────────────────────────
     def _execute(self, source: str, *, capture_value: bool) -> RunResult:
         result = RunResult()
         buf = io.StringIO()
         try:
-            program = parse_program(source)
-            program = optimize(program)
-            analyse(program, builtin_names=self.builtin_names)
+            program = compile_program(source, builtin_names=self.builtin_names)
             with contextlib.redirect_stdout(buf):
                 self.interp.run(program)
             if capture_value:

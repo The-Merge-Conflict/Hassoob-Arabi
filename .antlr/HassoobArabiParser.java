@@ -1,4 +1,4 @@
-// Generated from d:/development/python/Hassoob-Arabi/HassoobArabi.g4 by ANTLR 4.13.1
+// Generated from c:/HIAST/4thyear/S2/Compiler/HassobArabiNew/HassoobArabi.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -54,7 +54,7 @@ public class HassoobArabiParser extends Parser {
 			null, "'\\u0625\\u0630\\u0627'", "'\\u0648\\u0625\\u0644\\u0627'", "'\\u0628\\u064A\\u0646\\u0645\\u0627'", 
 			"'\\u0644\\u0643\\u0644'", "'\\u0645\\u0646'", "'\\u0625\\u0644\\u0649'", 
 			"'\\u0641\\u064A'", "'\\u0628\\u062E\\u0637\\u0648\\u0629'", "'\\u062F\\u0627\\u0644\\u0629'", 
-			"'\\u0625\\u0631\\u062C\\u0639'", "'\\u0627\\u0648\\u0642\\u0641'", "'\\u0627\\u0633\\u062A\\u0645\\u0631'", 
+			"'\\u0625\\u0631\\u062C\\u0639'", "'\\u062A\\u0648\\u0642\\u0641'", "'\\u0627\\u0633\\u062A\\u0645\\u0631'", 
 			"'\\u0635\\u062D'", "'\\u062E\\u0637\\u0623'", "'\\u0641\\u0627\\u0631\\u063A'", 
 			"'\\u0631\\u0645\\u0632'", null, "'\\u0647\\u0640'", "'\\u0644\\u0627\\u0646\\u0647\\u0627\\u064A\\u0629'", 
 			null, null, null, "'+='", "'-='", "'*='", "'/='", "'^='", "'%='", "'++='", 
@@ -142,14 +142,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterProgram(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitProgram(this);
-		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -206,14 +198,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(AugAssignStmtContext.class,0);
 		}
 		public AugAssignStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterAugAssignStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitAugAssignStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class SymbolDeclStatementContext extends StatementContext {
@@ -221,14 +205,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(SymbolDeclContext.class,0);
 		}
 		public SymbolDeclStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterSymbolDeclStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitSymbolDeclStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IndexAssignStatementContext extends StatementContext {
@@ -236,14 +212,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(IndexAssignStmtContext.class,0);
 		}
 		public IndexAssignStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterIndexAssignStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitIndexAssignStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ForRangeStatementContext extends StatementContext {
@@ -251,14 +219,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ForRangeStmtContext.class,0);
 		}
 		public ForRangeStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterForRangeStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitForRangeStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class WhileStatementContext extends StatementContext {
@@ -266,14 +226,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(WhileStmtContext.class,0);
 		}
 		public WhileStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterWhileStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitWhileStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class AssignStatementContext extends StatementContext {
@@ -281,14 +233,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(AssignStmtContext.class,0);
 		}
 		public AssignStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterAssignStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitAssignStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BreakStatementContext extends StatementContext {
@@ -296,14 +240,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(BreakStmtContext.class,0);
 		}
 		public BreakStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterBreakStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitBreakStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IfStatementContext extends StatementContext {
@@ -311,14 +247,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(IfStmtContext.class,0);
 		}
 		public IfStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterIfStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitIfStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ReturnStatementContext extends StatementContext {
@@ -326,14 +254,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ReturnStmtContext.class,0);
 		}
 		public ReturnStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterReturnStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitReturnStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprStatementContext extends StatementContext {
@@ -341,14 +261,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ExprStmtContext.class,0);
 		}
 		public ExprStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterExprStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitExprStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FunctionDefStmtContext extends StatementContext {
@@ -356,14 +268,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(FunctionDefContext.class,0);
 		}
 		public FunctionDefStmtContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterFunctionDefStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitFunctionDefStmt(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ContinueStatementContext extends StatementContext {
@@ -371,14 +275,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ContinueStmtContext.class,0);
 		}
 		public ContinueStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterContinueStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitContinueStatement(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ForEachStatementContext extends StatementContext {
@@ -386,14 +282,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ForEachStmtContext.class,0);
 		}
 		public ForEachStatementContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterForEachStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitForEachStatement(this);
-		}
 	}
 
 	public final StatementContext statement() throws RecognitionException {
@@ -536,14 +424,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_functionDef; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterFunctionDef(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitFunctionDef(this);
-		}
 	}
 
 	public final FunctionDefContext functionDef() throws RecognitionException {
@@ -600,14 +480,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_paramList; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterParamList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitParamList(this);
-		}
 	}
 
 	public final ParamListContext paramList() throws RecognitionException {
@@ -662,14 +534,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_block; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterBlock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitBlock(this);
-		}
 	}
 
 	public final BlockContext block() throws RecognitionException {
@@ -734,14 +598,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ifStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterIfStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitIfStmt(this);
-		}
 	}
 
 	public final IfStmtContext ifStmt() throws RecognitionException {
@@ -817,14 +673,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elseIfClause; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterElseIfClause(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitElseIfClause(this);
-		}
 	}
 
 	public final ElseIfClauseContext elseIfClause() throws RecognitionException {
@@ -868,14 +716,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_elseClause; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterElseClause(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitElseClause(this);
-		}
 	}
 
 	public final ElseClauseContext elseClause() throws RecognitionException {
@@ -916,14 +756,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whileStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterWhileStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitWhileStmt(this);
-		}
 	}
 
 	public final WhileStmtContext whileStmt() throws RecognitionException {
@@ -970,14 +802,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_forEachStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterForEachStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitForEachStmt(this);
-		}
 	}
 
 	public final ForEachStmtContext forEachStmt() throws RecognitionException {
@@ -1029,14 +853,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_forRangeStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterForRangeStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitForRangeStmt(this);
-		}
 	}
 
 	public final ForRangeStmtContext forRangeStmt() throws RecognitionException {
@@ -1096,14 +912,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_returnStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterReturnStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitReturnStmt(this);
-		}
 	}
 
 	public final ReturnStmtContext returnStmt() throws RecognitionException {
@@ -1156,14 +964,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_breakStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterBreakStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitBreakStmt(this);
-		}
 	}
 
 	public final BreakStmtContext breakStmt() throws RecognitionException {
@@ -1206,14 +1006,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_continueStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterContinueStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitContinueStmt(this);
-		}
 	}
 
 	public final ContinueStmtContext continueStmt() throws RecognitionException {
@@ -1264,14 +1056,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_symbolDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterSymbolDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitSymbolDecl(this);
-		}
 	}
 
 	public final SymbolDeclContext symbolDecl() throws RecognitionException {
@@ -1336,14 +1120,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assignStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterAssignStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitAssignStmt(this);
-		}
 	}
 
 	public final AssignStmtContext assignStmt() throws RecognitionException {
@@ -1396,14 +1172,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_augAssignStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterAugAssignStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitAugAssignStmt(this);
-		}
 	}
 
 	public final AugAssignStmtContext augAssignStmt() throws RecognitionException {
@@ -1455,14 +1223,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_augOp; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterAugOp(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitAugOp(this);
-		}
 	}
 
 	public final AugOpContext augOp() throws RecognitionException {
@@ -1521,14 +1281,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_indexAssignStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterIndexAssignStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitIndexAssignStmt(this);
-		}
 	}
 
 	public final IndexAssignStmtContext indexAssignStmt() throws RecognitionException {
@@ -1595,14 +1347,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_exprStmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterExprStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitExprStmt(this);
-		}
 	}
 
 	public final ExprStmtContext exprStmt() throws RecognitionException {
@@ -1649,14 +1393,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitExpression(this);
-		}
 	}
 
 	public final ExpressionContext expression() throws RecognitionException {
@@ -1717,14 +1453,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ParamListContext.class,0);
 		}
 		public MultiParamLambdaContext(LambdaExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterMultiParamLambda(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitMultiParamLambda(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class SingleParamLambdaContext extends LambdaExprContext {
@@ -1734,14 +1462,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ExpressionContext.class,0);
 		}
 		public SingleParamLambdaContext(LambdaExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterSingleParamLambda(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitSingleParamLambda(this);
-		}
 	}
 
 	public final LambdaExprContext lambdaExpr() throws RecognitionException {
@@ -1819,14 +1539,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_orExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterOrExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitOrExpr(this);
-		}
 	}
 
 	public final OrExprContext orExpr() throws RecognitionException {
@@ -1883,14 +1595,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_andExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterAndExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitAndExpr(this);
-		}
 	}
 
 	public final AndExprContext andExpr() throws RecognitionException {
@@ -1950,14 +1654,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(NotExprContext.class,0);
 		}
 		public NotExpressionContext(NotExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterNotExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitNotExpression(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class PassThroughNotContext extends NotExprContext {
@@ -1965,14 +1661,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(EqualityExprContext.class,0);
 		}
 		public PassThroughNotContext(NotExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterPassThroughNot(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitPassThroughNot(this);
-		}
 	}
 
 	public final NotExprContext notExpr() throws RecognitionException {
@@ -2049,14 +1737,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_equalityExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterEqualityExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitEqualityExpr(this);
-		}
 	}
 
 	public final EqualityExprContext equalityExpr() throws RecognitionException {
@@ -2133,14 +1813,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_relationalExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterRelationalExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitRelationalExpr(this);
-		}
 	}
 
 	public final RelationalExprContext relationalExpr() throws RecognitionException {
@@ -2213,14 +1885,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_addExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterAddExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitAddExpr(this);
-		}
 	}
 
 	public final AddExprContext addExpr() throws RecognitionException {
@@ -2304,14 +1968,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_mulExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterMulExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitMulExpr(this);
-		}
 	}
 
 	public final MulExprContext mulExpr() throws RecognitionException {
@@ -2378,14 +2034,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(PowerExprContext.class,0);
 		}
 		public PassThroughUnaryContext(UnaryExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterPassThroughUnary(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitPassThroughUnary(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class UnaryPlusContext extends UnaryExprContext {
@@ -2394,14 +2042,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(UnaryExprContext.class,0);
 		}
 		public UnaryPlusContext(UnaryExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterUnaryPlus(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitUnaryPlus(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class UnaryMinusContext extends UnaryExprContext {
@@ -2410,14 +2050,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(UnaryExprContext.class,0);
 		}
 		public UnaryMinusContext(UnaryExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterUnaryMinus(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitUnaryMinus(this);
-		}
 	}
 
 	public final UnaryExprContext unaryExpr() throws RecognitionException {
@@ -2495,14 +2127,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_powerExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterPowerExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitPowerExpr(this);
-		}
 	}
 
 	public final PowerExprContext powerExpr() throws RecognitionException {
@@ -2576,14 +2200,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_postfixExpr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterPostfixExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitPostfixExpr(this);
-		}
 	}
 
 	public final PostfixExprContext postfixExpr() throws RecognitionException {
@@ -2679,14 +2295,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_argList; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterArgList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitArgList(this);
-		}
 	}
 
 	public final ArgListContext argList() throws RecognitionException {
@@ -2767,92 +2375,36 @@ public class HassoobArabiParser extends Parser {
 	public static class FloatLiteralContext extends PrimaryContext {
 		public TerminalNode FLOAT_LIT() { return getToken(HassoobArabiParser.FLOAT_LIT, 0); }
 		public FloatLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterFloatLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitFloatLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class InfinityConstantContext extends PrimaryContext {
 		public TerminalNode INF_CONST() { return getToken(HassoobArabiParser.INF_CONST, 0); }
 		public InfinityConstantContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterInfinityConstant(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitInfinityConstant(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FalseLiteralContext extends PrimaryContext {
 		public TerminalNode KHATA() { return getToken(HassoobArabiParser.KHATA, 0); }
 		public FalseLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterFalseLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitFalseLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StringLiteralContext extends PrimaryContext {
 		public TerminalNode STRING_LIT() { return getToken(HassoobArabiParser.STRING_LIT, 0); }
 		public StringLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterStringLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitStringLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TrueLiteralContext extends PrimaryContext {
 		public TerminalNode SAHIH() { return getToken(HassoobArabiParser.SAHIH, 0); }
 		public TrueLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterTrueLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitTrueLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IdentifierExprContext extends PrimaryContext {
 		public TerminalNode IDENTIFIER() { return getToken(HassoobArabiParser.IDENTIFIER, 0); }
 		public IdentifierExprContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterIdentifierExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitIdentifierExpr(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FStringLiteralContext extends PrimaryContext {
 		public TerminalNode FSTRING_LIT() { return getToken(HassoobArabiParser.FSTRING_LIT, 0); }
 		public FStringLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterFStringLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitFStringLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TupleLiteralContext extends PrimaryContext {
@@ -2869,40 +2421,16 @@ public class HassoobArabiParser extends Parser {
 		}
 		public TerminalNode RPAREN() { return getToken(HassoobArabiParser.RPAREN, 0); }
 		public TupleLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterTupleLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitTupleLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class IntLiteralContext extends PrimaryContext {
 		public TerminalNode INTEGER_LIT() { return getToken(HassoobArabiParser.INTEGER_LIT, 0); }
 		public IntLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterIntLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitIntLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class PiConstantContext extends PrimaryContext {
 		public TerminalNode PI_CONST() { return getToken(HassoobArabiParser.PI_CONST, 0); }
 		public PiConstantContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterPiConstant(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitPiConstant(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ListExprContext extends PrimaryContext {
@@ -2910,14 +2438,6 @@ public class HassoobArabiParser extends Parser {
 			return getRuleContext(ListLiteralContext.class,0);
 		}
 		public ListExprContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterListExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitListExpr(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ParenExprContext extends PrimaryContext {
@@ -2927,40 +2447,16 @@ public class HassoobArabiParser extends Parser {
 		}
 		public TerminalNode RPAREN() { return getToken(HassoobArabiParser.RPAREN, 0); }
 		public ParenExprContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterParenExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitParenExpr(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class NullLiteralContext extends PrimaryContext {
 		public TerminalNode FARIG() { return getToken(HassoobArabiParser.FARIG, 0); }
 		public NullLiteralContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterNullLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitNullLiteral(this);
-		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class EulerConstantContext extends PrimaryContext {
 		public TerminalNode E_CONST() { return getToken(HassoobArabiParser.E_CONST, 0); }
 		public EulerConstantContext(PrimaryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterEulerConstant(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitEulerConstant(this);
-		}
 	}
 
 	public final PrimaryContext primary() throws RecognitionException {
@@ -3142,14 +2638,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_listLiteral; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterListLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitListLiteral(this);
-		}
 	}
 
 	public final ListLiteralContext listLiteral() throws RecognitionException {
@@ -3218,14 +2706,6 @@ public class HassoobArabiParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_indexList; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).enterIndexList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HassoobArabiListener ) ((HassoobArabiListener)listener).exitIndexList(this);
-		}
 	}
 
 	public final IndexListContext indexList() throws RecognitionException {

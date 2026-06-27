@@ -250,7 +250,17 @@ class Optimizer:
             else:
                 return None  # '**' (matmul) and '++' on numbers are not folded
         except (ZeroDivisionError, ValueError, OverflowError, TypeError):
-            return None  # leave the error to runtime
+            # Never fold an operation that itself raises; return None so the
+            # original node survives and the proper friendly Arabic error is
+            # produced at the right phase instead of crashing the optimiser.
+            #
+            # On division-by-zero specifically: a CONSTANT divisor of zero
+            # (e.g. ٩ / ٠) is already rejected by the SEMANTIC phase, which runs
+            # BEFORE the optimiser (see pipeline.compile_program: analyse →
+            # optimise). So a constant x / 0 can never reach this point; this
+            # guard therefore defers only genuinely dynamic arithmetic edge
+            # cases (overflow, bad operand types, …) to runtime.
+            return None
         # negative base ^ non-integer power yields a complex number: do NOT fold
         # it to a literal (would crash _make_lit) — defer to runtime so it raises a
         # friendly Arabic error via check_power.
@@ -286,8 +296,12 @@ class Optimizer:
             if l_zero and isinstance(right, _SIDE_EFFECT_FREE):
                 return IntLiteralNode(0)
         elif op == "/":
-            # 0 / x is NOT folded: x may be 0 at runtime and must raise a
-            # division-by-zero error instead of being silently optimised to 0.
+            # Division is intentionally NOT simplified by an identity rule.
+            # Folding 0 / x → 0 would be WRONG: x may be 0 at runtime and that
+            # case must still raise a division-by-zero error, not be silently
+            # optimised away. (A constant c / 0 is caught even earlier, as a
+            # static SEMANTIC error — see semantic._check_const_zero_division —
+            # so the optimiser never has to reason about constant zero divisors.)
             pass
         elif op == "^":
             if r_one: return left                              # x ^ 1 → x
