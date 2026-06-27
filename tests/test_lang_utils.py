@@ -5,6 +5,9 @@ for _p in (os.path.join(_ROOT, "src"), os.path.join(_ROOT, "generated")):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
+# register the phase folders (frontend/midend/backend/driver) on sys.path
+import _pathsetup  # noqa: F401,E402
+
 from lang_utils import decode_escapes, split_fstring, chain_comparisons
 from ast_nodes import BinOpNode, IdentifierNode, IntLiteralNode
 from errors import ParseError

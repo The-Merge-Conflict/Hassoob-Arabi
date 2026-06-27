@@ -3,6 +3,18 @@
 # run_source: the full parse -> analyse -> optimise -> interpret pipeline.
 # ---------------------------------------------------------------------------
 from __future__ import annotations
+# -- source-path bootstrap ---------------------------------------------------
+# Hassoob's modules refer to one another by short name (e.g. ``from errors
+# import ...``). Register the source root plus every compiler-phase folder so
+# those names resolve no matter which module Python imports first.
+import os as _os, sys as _sys
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "src" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+if _d and _d not in _sys.path:
+    _sys.path.insert(0, _d)
+import _pathsetup  # noqa: F401,E402  (registers all phase roots on sys.path)
+
 import os, sys
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SRC = os.path.dirname(_HERE)
@@ -13,12 +25,12 @@ for _p in (os.path.join(_ROOT, 'generated'), _SRC):
 from typing import Optional
 from environment import Environment
 from _builtins_loader import BUILTINS
-from .evaluator import Interpreter
-from .parsing import parse_program, parse_program_collecting
+from evaluator import Interpreter
+from parsing import parse_program, parse_program_collecting
 
 
 def compile_program(source: str, builtin_names=None):
-    """Front-end: parse → optimise → analyse, returning a ready-to-run program.
+    """Front-end: parse → analyse → optimise, returning a ready-to-run program.
 
     Two error-handling modes:
       • No syntax errors  → happy path: analyse, then optimise the tree.

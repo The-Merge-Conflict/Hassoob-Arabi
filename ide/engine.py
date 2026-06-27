@@ -23,6 +23,7 @@ _ROOT = os.path.dirname(_HERE)
 for _p in (os.path.join(_ROOT, "generated"), os.path.join(_ROOT, "src")):
     if _p not in sys.path:
         sys.path.insert(0, _p)
+import _pathsetup  # noqa: E402,F401  (registers all phase roots on sys.path)
 
 from errors import HassoobError  # noqa: E402
 from interpreter import Interpreter, compile_program  # noqa: E402
@@ -91,7 +92,7 @@ class HassoobEngine:
                 _sys.path.insert(0, _HERE)
             from diagnostics import build, Diagnostics  # type: ignore
         try:
-            from interpreter.parsing import parse_program_collecting
+            from interpreter import parse_program_collecting
             from semantic import collect_semantic_errors
         except Exception:
             return Diagnostics()

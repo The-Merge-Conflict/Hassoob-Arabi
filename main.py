@@ -11,9 +11,10 @@ from __future__ import annotations
 import os, sys
 
 _ROOT = os.path.dirname(os.path.abspath(__file__))
-for _p in (os.path.join(_ROOT, "generated"), os.path.join(_ROOT, "src")):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
+_SRC = os.path.join(_ROOT, "src")
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
+import _pathsetup  # noqa: E402,F401  (registers all phase roots on sys.path)
 
 from errors import HassoobError
 from interpreter import Interpreter, compile_program
