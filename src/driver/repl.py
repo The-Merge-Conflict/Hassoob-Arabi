@@ -6,6 +6,18 @@
 # transparently falls back to a plain input() loop when it is not installed.
 # ───────────────────────────────────────────────────────────────────────
 from __future__ import annotations
+# -- source-path bootstrap ---------------------------------------------------
+# Hassoob's modules refer to one another by short name (e.g. ``from errors
+# import ...``). Register the source root plus every compiler-phase folder so
+# those names resolve no matter which module Python imports first.
+import os as _os, sys as _sys
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "src" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+if _d and _d not in _sys.path:
+    _sys.path.insert(0, _d)
+import _pathsetup  # noqa: F401,E402  (registers all phase roots on sys.path)
+
 import os, sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
