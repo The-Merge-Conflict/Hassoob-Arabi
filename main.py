@@ -16,19 +16,14 @@ for _p in (os.path.join(_ROOT, "generated"), os.path.join(_ROOT, "src")):
         sys.path.insert(0, _p)
 
 from errors import HassoobError
-from interpreter import Interpreter, parse_program
-from optimizer import optimize
-from semantic import analyse
-from _builtins_loader import BUILTINS
+from interpreter import Interpreter, compile_program
 
 
 def run_program_source(source: str, repl_mode: bool = False) -> int:
     """Run a full program string through the whole pipeline."""
     interp = Interpreter(repl_mode=repl_mode)
     try:
-        program = parse_program(source)
-        program = optimize(program)
-        analyse(program, builtin_names=list(BUILTINS.keys()))
+        program = compile_program(source)
         interp.run(program, interp.global_env)
         return 0
     except HassoobError as err:
@@ -77,7 +72,7 @@ def main(argv=None) -> int:
     # Otherwise treat the first argument as a script path.
     path = argv[0]
     if not os.path.isfile(path):
-        print(f"🌸 خطأ: الملف ‹{path}› غير موجود", file=sys.stderr)
+        print(f"خطأ: الملف ‹{path}› غير موجود", file=sys.stderr)
         return 1
     with open(path, "r", encoding="utf-8") as fh:
         source = fh.read()

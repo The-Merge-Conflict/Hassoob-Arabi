@@ -116,7 +116,7 @@ FI       : 'في'     ;
 BKHUTWA  : 'بخطوة'  ;
 DALA     : 'دالة'   ;
 IRJA     : 'إرجع'   ;
-AWQIF    : 'اوقف'   ;
+AWQIF    : 'توقف'   ;
 ISTAMIRR : 'استمر'  ;
 SAHIH    : 'صح'   ;
 KHATA    : 'خطأ'    ;

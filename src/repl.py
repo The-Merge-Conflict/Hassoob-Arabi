@@ -15,10 +15,8 @@ for _p in (os.path.join(_ROOT, "generated"), _HERE):
         sys.path.insert(0, _p)
 
 from errors import HassoobError
-from interpreter import Interpreter, parse_program
-from optimizer import optimize
-from semantic import analyse
-from _builtins_loader import BUILTINS, BUILTIN_NAMES, format_value, to_arabic_digits
+from interpreter import Interpreter, compile_program
+from _builtins_loader import BUILTIN_NAMES, format_value, to_arabic_digits
 
 PROMPT = "حاسوب عربي ← "
 CONT_PROMPT = "            … "
@@ -26,7 +24,7 @@ HISTORY_PATH = os.path.expanduser("~/.hassoobarabi_history")
 
 KEYWORDS = [
     "دالة", "إذا", "وإلا", "بينما", "لكل", "من", "إلى", "في", "بخطوة",
-    "إرجع", "اوقف", "استمر", "صح", "خطأ", "فارغ", "رمز", "ليس", "و", "أو",
+    "إرجع", "توقف", "استمر", "صح", "خطأ", "فارغ", "رمز", "ليس", "و", "أو",
     "باي", "لانهاية",
 ]
 
@@ -86,9 +84,7 @@ def _handle_command(text: str) -> bool:
 
 
 def _run_one(interp: Interpreter, source: str):
-    program = parse_program(source)
-    program = optimize(program)
-    analyse(program, builtin_names=list(BUILTINS.keys()))
+    program = compile_program(source)
     interp.run(program, interp.global_env)
 
 
@@ -122,7 +118,7 @@ def _run_prompt_toolkit(interp: Interpreter):
         except SystemExit:
             raise
         except Exception as err:  # pragma: no cover - defensive, keep REPL alive
-            print(f"🌸 عذرًا، حدث خطأ غير متوقّع: {err}")
+            print(f"عذرًا، حدث خطأ غير متوقّع: {err}")
 
 
 # ── plain fallback loop ─────────────────────────────────────────

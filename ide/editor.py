@@ -209,6 +209,11 @@ class HassoobIDE:
         self._vscroll = scroll
         for tag, color in COLORS.items():
             self.editor.tag_configure(tag, foreground=color)
+        # diagnostics: underline every occurrence of an undefined name. The
+        # problem itself is still listed once (see update_diagnostics()).
+        self.editor.tag_configure("diag_undefined", underline=True,
+                                  foreground="#ff6b6b")
+        self._diag_tags = ("diag_undefined",)
         pane.add(ed, height=420)
 
         # —— terminal frame ——
@@ -322,6 +327,29 @@ class HassoobIDE:
             self.editor.tag_add(span.tag, start, end)
         # keep right-justification applied to the whole document
         self.editor.tag_add("all", "1.0", "end")
+        # refresh diagnostics squiggles/underlines from the engine (guarded)
+        self.update_diagnostics()
+
+    def update_diagnostics(self):
+        """Ask the engine to analyse the current buffer and underline EVERY
+        occurrence of each undefined name. The analyser reports each problem
+        once; we surface that single list in the status bar while underlining
+        all uses, so typos in a long program are easy to find. Guarded so a
+        missing/ungenerated parser never breaks editing."""
+        text = self.editor.get("1.0", "end-1c")
+        for tag in getattr(self, "_diag_tags", ("diag_undefined",)):
+            self.editor.tag_remove(tag, "1.0", "end")
+        try:
+            report = self.engine.diagnose(text)
+        except Exception:
+            return
+        for u in report.underlines:
+            self.editor.tag_add("diag_undefined",
+                                f"1.0+{u.start}c", f"1.0+{u.end}c")
+        diags = report.diagnostics
+        if diags:
+            extra = f"  (+{len(diags) - 1})" if len(diags) > 1 else ""
+            self.status.config(text=f"⚠ {diags[0].message}{extra}")
 
     # ── running ─────────────────────────────────────────────────
     def run_code(self):

@@ -32,26 +32,43 @@ class SemanticAnalyser:
     interpreter, where only function/lambda calls push a new frame.
     """
 
+    # division-family operators whose right operand must be non-zero
+    _DIV_OPS = ("/", "÷", "%")
+    # sentinel: "this expression is not a statically-known constant"
+    _NO_CONST = object()
+
     def __init__(self, builtin_names=()):
         self.builtins = set(builtin_names)
         self.scopes: list[dict] = []   # each: name -> ('func', arity) | ('var', None)
         self.loop_depth = 0
         self.func_depth = 0
         self.errors: list = []
+        # cascade suppression: names already reported as undefined in the
+        # CURRENT scope. Each undefined name is reported once per function (the
+        # set is reset on entering each function body in _function), instead of
+        # on every later use.
+        self._reported_undeclared: set = set()
 
     # ── public API ──────────────────────────────────────────────
     def analyse(self, program: ProgramNode) -> ProgramNode:
+        self._collect(program)
+        if len(self.errors) == 1:
+            raise self.errors[0]
+        if self.errors:
+            raise MultiError(self.errors)
+        return program
+
+    def _collect(self, program: ProgramNode) -> list:
+        """Run the full analysis, gathering every error into self.errors
+        WITHOUT raising. Shared by analyse() (which then raises) and the
+        cross-phase recovery path (which merges these with the syntax errors)."""
         scope: dict = {}
         self._hoist(program.statements, scope)
         self.scopes.append(scope)
         for stmt in program.statements:
             self._safe_stmt(stmt)
         self.scopes.pop()
-        if len(self.errors) == 1:
-            raise self.errors[0]
-        if self.errors:
-            raise MultiError(self.errors)
-        return program
+        return self.errors
 
     # ── one error per statement: collect & continue ─────────────
     def _safe_stmt(self, s):
@@ -107,13 +124,34 @@ class SemanticAnalyser:
         return names
 
     def _require_declared(self, name, node=None):
-        if self._lookup(name) is None:
-            raise SemanticError(
-                f"الاسم ‹{name}› غير معرّف (لا متغيّر ولا دالة)",
-                line=getattr(node, "line", None), col=getattr(node, "col", None),
-                suggestion=closest_name(name, self._known_names()),
-                hint="ربّما هو خطأ إملائي، أو نسيت تعريفه أولاً.",
-            )
+        if self._lookup(name) is not None:
+            return
+        # cascade suppression: "one error per NAME, per scope".
+        # Report each undefined name only ONCE. After the first report we treat
+        # it as already-seen, so its every later use no longer spawns a fresh
+        # duplicate error. This mirrors the "error-type poisoning" real compilers
+        # use to avoid drowning the user in thousands of knock-on errors that all
+        # share ONE root cause (a single typo, or a name we forgot to define).
+        #
+        # We deliberately do NOT lose the other occurrences: the problem LIST
+        # stays short (one entry), while the IDE still underlines EVERY use of
+        # the name in the editor (via `err.symbol` below, which
+        # ide/diagnostics.build() expands into one underline span per
+        # occurrence). So the user gets one clear, non-overwhelming message in
+        # the list AND can still see every place that needs fixing.
+        if name in self._reported_undeclared:
+            return
+        self._reported_undeclared.add(name)
+        err = SemanticError(
+            f"الاسم ‹{name}› غير معرّف (لا متغيّر ولا دالة)",
+            line=getattr(node, "line", None), col=getattr(node, "col", None),
+            suggestion=closest_name(name, self._known_names()),
+            hint="ربّما هو خطأ إملائي، أو نسيت تعريفه أولاً، انظر للمتغيرات التي تظهر باللون الأحمر على الشاشة فهي غير معرفة بعد.",
+        )
+        # expose the offending identifier so a front-end (e.g. the IDE) can
+        # underline EVERY occurrence of it while this error is still listed once.
+        err.symbol = name  # type: ignore[attr-defined]
+        raise err
 
     # ── statements ──────────────────────────────────────────────
     def _stmt(self, s):
@@ -126,7 +164,7 @@ class SemanticAnalyser:
             self._expr(s.value)
         elif isinstance(s, IndexAssignNode):
             self._require_declared(s.target, s)
-            for group in s.indices:        # CHANGED: one entry per bracket group
+            for group in s.indices:        # one entry per bracket group
                 self._expr(group)
             self._expr(s.value)
         elif isinstance(s, SymbolDeclNode):
@@ -172,9 +210,9 @@ class SemanticAnalyser:
         elif isinstance(s, BreakNode):
             if self.loop_depth == 0:
                 raise SemanticError(
-                    "‹اوقف› تُستخدم داخل حلقة فقط",
+                    "‹توقف› تُستخدم داخل حلقة فقط",
                     line=getattr(s, "line", None), col=getattr(s, "col", None),
-                    hint="‹اوقف› توقف حلقة ‹بينما› أو ‹لكل›.",
+                    hint="‹توقف› توقف حلقة ‹بينما› أو ‹لكل›.",
                 )
         elif isinstance(s, ContinueNode):
             if self.loop_depth == 0:
@@ -195,9 +233,17 @@ class SemanticAnalyser:
         self.scopes.append(scope)
         self.func_depth += 1
         saved_loop = self.loop_depth
-        self.loop_depth = 0  # اوقف/استمر cannot cross a function boundary
+        self.loop_depth = 0  # توقف/استمر cannot cross a function boundary
+        # per-scope cascade suppression (the GCC model): each undefined name is
+        # reported once per function it appears in. Reset the already-reported
+        # set on entering this body and restore the outer set on exit, so a typo
+        # inside one function never silences the same name elsewhere, while many
+        # uses within one body still collapse to a single error.
+        saved_reported = self._reported_undeclared
+        self._reported_undeclared = set()
         for st in node.body.statements:
             self._safe_stmt(st)
+        self._reported_undeclared = saved_reported
         self.loop_depth = saved_loop
         self.func_depth -= 1
         self.scopes.pop()
@@ -211,7 +257,7 @@ class SemanticAnalyser:
                             InfinityNode)):
             return
         elif isinstance(e, FStringNode):
-            # CHANGED: interpolated expressions are parsed at build time, so an
+            # interpolated expressions are parsed at build time, so an
             # undefined name inside an f-string is caught here, not only at runtime.
             for kind, val in e.parts:
                 if kind == "expr":
@@ -219,6 +265,7 @@ class SemanticAnalyser:
         elif isinstance(e, BinOpNode):
             self._expr(e.left)
             self._expr(e.right)
+            self._check_const_zero_division(e)
         elif isinstance(e, UnaryOpNode):
             self._expr(e.operand)
         elif isinstance(e, CallNode):
@@ -261,7 +308,96 @@ class SemanticAnalyser:
             # annotate the call node with its resolved arity
             call.arity = arity  # type: ignore[attr-defined]
 
+    # ── static constant checks ──────────────────────
+    def _check_const_zero_division(self, node: BinOpNode):
+        """Flag a guaranteed division-by-zero whose divisor is a compile-time
+        constant — e.g. ٩ / ٠, or أ / ٠ once أ folds to a constant.
+
+        When the divisor is a pure constant expression we already KNOW — without
+        running anything — that this division can only ever fail. There is no
+        input, branch or program state that could ever make ٩ / ٠ valid, so it
+        is obvious at analysis time and does not need to reach runtime to be
+        caught. Reporting it statically lets us point at the exact line/column
+        and refuse to run a program that is provably broken, instead of waiting
+        for the divide to be *reached* at runtime (it might sit in a rarely-taken
+        branch, or never run on a given input, silently hiding the bug). This is
+        exactly why real compilers reject a literal `1/0` at compile time.
+
+        Only CONSTANT divisors are checked. Anything involving a variable, a
+        call or any other dynamic value is deliberately LEFT TO RUNTIME: its
+        value cannot be known statically, and we must never reject a program
+        that could be perfectly valid (e.g. a divisor that is only 0 for some
+        inputs). Static checks must have ZERO false positives."""
+        if node.op not in self._DIV_OPS:
+            return
+        divisor = self._const_eval(node.right)
+        if divisor is self._NO_CONST:
+            return
+        if divisor == 0:
+            raise SemanticError(
+                "القسمة على صفر",
+                line=getattr(node, "line", None), col=getattr(node, "col", None),
+                hint="المقسوم عليه ثابتٌ قيمته صفر، والقسمة على صفر غير معرّفة.",
+            )
+
+    def _const_eval(self, node):
+        """Evaluate a PURELY constant numeric expression (int/float literals
+        combined with + - * / ÷ % ^ and unary signs) and return its value, or
+        self._NO_CONST if it is not such a constant or could not be evaluated
+        (contains a variable, or evaluating it would itself raise). Booleans and
+        symbolic constants are treated as NON-constant here on purpose, to avoid
+        surprising static errors."""
+        try:
+            if isinstance(node, IntLiteralNode):
+                return node.value
+            if isinstance(node, FloatLiteralNode):
+                return node.value
+            if isinstance(node, UnaryOpNode):
+                v = self._const_eval(node.operand)
+                if v is self._NO_CONST:
+                    return self._NO_CONST
+                if node.op == "-":
+                    return -v
+                if node.op == "+":
+                    return +v
+                return self._NO_CONST
+            if isinstance(node, BinOpNode):
+                a = self._const_eval(node.left)
+                if a is self._NO_CONST:
+                    return self._NO_CONST
+                b = self._const_eval(node.right)
+                if b is self._NO_CONST:
+                    return self._NO_CONST
+                op = node.op
+                if op == "+":
+                    return a + b
+                if op == "-":
+                    return a - b
+                if op == "*":
+                    return a * b
+                if op == "/":
+                    return a / b
+                if op == "÷":
+                    return a // b
+                if op == "%":
+                    return a % b
+                if op == "^":
+                    return a ** b
+                return self._NO_CONST
+            return self._NO_CONST
+        except (ZeroDivisionError, ValueError, OverflowError, TypeError):
+            return self._NO_CONST
+
 
 def analyse(program: ProgramNode, builtin_names=()) -> ProgramNode:
     """دالة مُيسّرة / convenience wrapper."""
     return SemanticAnalyser(builtin_names).analyse(program)
+
+
+def collect_semantic_errors(program: ProgramNode, builtin_names=()) -> list:
+    """Like analyse() but RETURNS the list of semantic errors instead of
+    raising. Used by the cross-phase recovery path so syntax + semantic errors
+    can be reported together in one MultiError."""
+    analyser = SemanticAnalyser(builtin_names)
+    analyser._collect(program)
+    return list(analyser.errors)

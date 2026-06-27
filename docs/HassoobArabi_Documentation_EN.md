@@ -99,7 +99,7 @@ The whole pipeline is wired together by `interpreter/pipeline.py:run_source` (an
 |---|---|---|
 | Lexing & parsing | `generated/` (from `HassoobArabi.g4`), `src/interpreter/parsing.py` | Tokenize Arabic source, build a parse tree, and translate ANTLR errors into friendly Arabic ones. |
 | AST building | `src/ast_builder.py`, `src/ast_nodes/` | Convert the parse tree into typed AST nodes. |
-| Semantic analysis | `src/semantic.py` | Static checks: undefined names, wrong argument counts, misplaced `إرجع`/`اوقف`/`استمر`. |
+| Semantic analysis | `src/semantic.py` | Static checks: undefined names, wrong argument counts, misplaced `إرجع`/`توقف`/`استمر`. |
 | Optimization | `src/optimizer.py` | Constant folding, simplification, removing unreachable branches. |
 | Interpretation | `src/interpreter/evaluator.py`, `src/environment.py` | Execute the AST; manage the (Mathematica-style) scope chain. |
 | Standard library | `src/library/`, `src/_builtins_loader.py`, `src/runtime_ops.py`, `src/lang_utils.py` | Built-in functions, operator semantics, helpers. |
@@ -252,7 +252,7 @@ The interpreter uses a **Mathematica-style scope chain**: functions introduce a 
 لكل ع من ١ إلى ٥ { اطبع(ع) }
 لكل ع من ١٠ إلى ١ بخطوة -٢ { اطبع(ع) }
 ```
-`اوقف` = break, `استمر` = continue.
+`توقف` = break, `استمر` = continue.
 
 ### 6.6 Functions & lambdas
 ```text
@@ -399,7 +399,7 @@ The error hierarchy (now organized under `src/errors/`) distinguishes four categ
 | Semantic | `errors/semantic.py` (`SemanticError`, `MultiError`) | `خطأ دلالي` | 🔍 | Undefined name, wrong argument count, etc. |
 | Runtime | `errors/runtime.py` (`HassoobRuntimeError`) | `خطأ في التنفيذ` | ⚠️ | Division by zero, bad type, etc. |
 
-When a name is misspelled, the analyzer offers a fuzzy *"did you mean…"* (`هل تقصد`) suggestion using closest-match matching, plus an optional hint (`💡`). Control-flow signals (`إرجع`/`اوقف`/`استمر`, in `errors/signals.py`) are intentionally **not** part of the error hierarchy, so user-facing handlers never swallow them.
+When a name is misspelled, the analyzer offers a fuzzy *"did you mean…"* (`هل تقصد`) suggestion using closest-match matching, plus an optional hint (`💡`). Control-flow signals (`إرجع`/`توقف`/`استمر`, in `errors/signals.py`) are intentionally **not** part of the error hierarchy, so user-facing handlers never swallow them.
 
 ---
 
@@ -411,7 +411,7 @@ The five programs in `examples/` together exercise the entire language. Run each
 - **② `إحصاء.حع` — Data analysis.** All statistics functions, sorting + slicing, `اختر`/`طبق` lambdas, a multi-branch grading function, correlation, and two plots (histogram + scatter).
 - **③ `حساب_تفاضلي.حع` — Calculus toolkit.** Factoring, 1st/2nd derivatives, critical points via `حل`, the second-derivative test (`عوض`), indefinite & definite integrals, a 0/0 limit, a Taylor series, a numeric root, and a plot of `د(س) = س³ − ٦س² + ٩س` with its derivative.
 - **④ `مصفوفات.حع` — Linear algebra.** Matrix multiply (`**`), transpose, determinant, inverse, eigenvalues, the N-D comma index `[ص, ع]`, chained index assignment, `حل_خطي`, dot & cross products.
-- **⑤ `خوارزميات.حع` — Control flow & algorithms.** Recursion (factorial), `بينما` + augmented assignment (Fibonacci), an early-return prime test, `اوقف`/`استمر`, palindrome detection via `عكس`, `قسم`/`دمج`, `طبق`/`اختر` lambdas, chained comparisons, and `نوع` type checks.
+- **⑤ `خوارزميات.حع` — Control flow & algorithms.** Recursion (factorial), `بينما` + augmented assignment (Fibonacci), an early-return prime test, `توقف`/`استمر`, palindrome detection via `عكس`, `قسم`/`دمج`, `طبق`/`اختر` lambdas, chained comparisons, and `نوع` type checks.
 
 ---
 

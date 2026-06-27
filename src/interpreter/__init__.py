@@ -13,6 +13,6 @@ for _p in (os.path.join(_ROOT, 'generated'), _SRC):
         sys.path.insert(0, _p)
 from .evaluator import Interpreter, Function
 from .parsing import parse_program, parse_expression
-from .pipeline import run_source
+from .pipeline import run_source, compile_program
 
-__all__ = ['Interpreter', 'Function', 'parse_program', 'parse_expression', 'run_source']
+__all__ = ['Interpreter', 'Function', 'parse_program', 'parse_expression', 'run_source', 'compile_program']

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 # ── Control-flow signals (NOT errors) ────────────────────────────────
 # These are raised internally by the interpreter to unwind the Python call stack
-# when executing إرجع / اوقف / استمر. They are deliberately *not* subclasses of
+# when executing إرجع / توقف / استمر. They are deliberately *not* subclasses of
 # HassoobError so user-facing error handlers never accidentally swallow them.
 
 class ReturnSignal(Exception):

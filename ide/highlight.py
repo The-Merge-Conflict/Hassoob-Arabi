@@ -16,7 +16,7 @@ from typing import List, Sequence
 # Language keywords (mirrors the ANTLR grammar's reserved words).
 KEYWORDS: tuple[str, ...] = (
     "إذا", "وإلا", "بينما", "لكل", "من", "إلى", "في", "بخطوة",
-    "دالة", "إرجع", "اوقف", "استمر",
+    "دالة", "إرجع", "توقف", "استمر",
     "صح", "خطأ", "فارغ", "رمز",
     "ليس", "و", "أو",
     "باي", "هـ", "لانهاية",

@@ -46,7 +46,7 @@ class AugAssignNode(_Positioned):
 @dataclass
 class IndexAssignNode(_Positioned):
     target:  str
-    indices: List[Any]   # CHANGED: one entry per bracket group; scalar node or TupleNode
+    indices: List[Any]   # one entry per bracket group; scalar node or TupleNode
     value:   Any
 
 
@@ -96,5 +96,17 @@ class ContinueNode(_Positioned):
 @dataclass
 class ExprStmtNode(_Positioned):
     expr: Any
+
+
+@dataclass
+class ErrorNode(_Positioned):
+    """عقدة بديلة لجملة/تعبير تعذّر بناؤه نحويًا (وضع التعافي من الأخطاء).
+
+    Placeholder for a statement (or expression) that could not be built because
+    of a syntax error. It is inert: the optimiser and the semantic analyser
+    treat it as a no-op, so a syntax error in one statement never blocks
+    analysing or reporting errors in the rest of the program.
+    """
+    message: Optional[str] = None
 
 
