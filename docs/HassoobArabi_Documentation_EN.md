@@ -22,7 +22,8 @@
 8. [Error Handling](#8-error-handling)
 9. [Example Programs](#9-example-programs)
 10. [Tests](#10-tests)
-11. [Repository & Team](#11-repository--team)
+11. [Future Work](#11-future-work)
+12. [Repository & Team](#12-repository--team)
 
 > **The documentation contains two guides:** a *Developer Guide* (extending the language, after section 4) and a *User Guide* (sections 5–7: running from scratch, and every command and task). Section 8 explains the error-handling philosophy, and section 6.10 covers normalization.
 
@@ -473,7 +474,37 @@ The test suites import through the package names (`from interpreter import …`,
 
 ---
 
-## 11. Repository & Team
+## 11. Future Work
+
+> *Ideas for developers:* this section gathers what can be added to the language later, and what we would have added with more time. The three-layer structure (front / middle / back end) makes each of these a natural, localized addition.
+
+### 1. Complex numbers
+Support complex numbers `أ + ب ت` (where `ت` is the imaginary unit), with arithmetic on them and companion functions such as real part, imaginary part, conjugate, and magnitude. This mainly touches the back end: a new value type in `src/backend/`, operator semantics in `runtime_ops.py`, and functions in `library/numeric.py`, plus normalization of the imaginary-unit symbol in the front end.
+
+### 2. An `إلى_تعبير` function (string → expression, like Mathematica's `ToExpression`)
+A function that takes a string and returns its value after parsing and evaluating it — to turn strings into numbers, or even into full symbolic expressions. It reuses the existing front end (`parse_expression`) and then goes through back-end evaluation, so no grammar change is needed.
+
+### 3. Translating every error into Arabic
+We already translate most ANTLR errors into friendly Arabic messages, but some cases still surface in English (from ANTLR or Python), and we aim to catch them all and render them in our unified Arabic format. One example not yet translated — a positional argument placed after a named one:
+
+> After the **named** argument عنوان="التوزيع التكراري", you put a **positional** argument 8 (separated by the Arabic comma ،). A positional argument is not allowed to come after a named one.
+
+The goal is an Arabic message in our canonical format, e.g.:
+
+```
+خطأ في السطر {line}، العمود {col}: لا يجوز وضع وسيط موضعي (٨) بعد وسيط مُسمّى (عنوان="التوزيع التكراري").
+   ↪ انقل الوسيط الموضعي قبل الوسطاء المُسمّاة.
+   💡 رتّب الوسطاء: الموضعية أولًا ثم المُسمّاة.
+```
+
+### 4. A VS Code extension
+An official extension for the language in Visual Studio Code: syntax highlighting via a TextMate grammar for `.حع` files, autocompletion for keywords and builtins, and live error highlighting through a language server (LSP) that reuses the existing diagnostics engine in `ide/engine.py`, with right-to-left (RTL) support.
+
+Contributions from developers on any of these fronts are welcome.
+
+---
+
+## 12. Repository & Team
 
 - **Repository:** https://github.com/The-Merge-Conflict/Hassoob-Arabi
 - **Team:** Jaafer Mahfoud · Laila Al-Abdullah · Hatem Ibrahim
